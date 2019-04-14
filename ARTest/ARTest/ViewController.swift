@@ -118,6 +118,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		
 		sceneView.pointOfView?.addChildNode(ballNode)
 		
+		
+		
+		// add the wall and door
+		let wallPlane  = SCNPlane(width: 15, height: 7.65)
+		wallPlane.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-closed")
+		wallPlane.firstMaterial?.lightingModel = .constant
+		let wallNode = SCNNode(geometry: wallPlane)
+		wallNode.position = SCNVector3(0,0,-20)
+		self.sceneView.scene.rootNode.addChildNode(wallNode)
+		
         
 //        // Create a new scene
 //        let scene = SCNScene(named: "art.scnassets/ship.scn")!
