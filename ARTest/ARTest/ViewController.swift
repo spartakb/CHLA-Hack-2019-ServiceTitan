@@ -24,7 +24,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 	
 	var panaromaView: CTPanoramaView!
 	
-	var wallPlane: SCNPlane!
+//	var wallPlane: SCNPlane!
 	var wallNode: SCNNode!
 	var isDoorOpen = false
 	
@@ -215,30 +215,43 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		
 		
 		
-		// add the wall and door
-		wallPlane  = SCNPlane(width: 3, height: 2.0)
-		wallPlane.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-closed")
-		wallPlane.firstMaterial?.lightingModel = .constant
-		wallNode = SCNNode(geometry: wallPlane)
-		wallNode.position = SCNVector3(0,0,-1.5)
-		
-		
-		let wallBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: wallPlane, options: nil))
-		wallBody.mass = 0
-		wallBody.restitution = 0.25
-		wallBody.friction = 0.75
-		wallBody.categoryBitMask =	spaceItemCategory
-		wallBody.contactTestBitMask =  pointOfViewCategory
-		wallNode.physicsBody = wallBody
-		
+		wallNode = createWallPlane(imageNamed: "sci-fi-door-3d-closed",  size: CGSize(width: 4.0, height: 2.0), rotation: 0, includesPhysics: true)
+		wallNode.position = SCNVector3(0, 0, -2.5)
 		self.sceneView.scene.rootNode.addChildNode(wallNode)
 		
+		let leftWallNode = createWallPlane(imageNamed: "left-wall", size: CGSize(width: 3.0, height: 2.0), rotation: 2, includesPhysics: false)
+		leftWallNode.position = SCNVector3(2.0, 0.0, -1.5 )
+		self.sceneView.scene.rootNode.addChildNode(leftWallNode)
+		
+		let rightWallNode = createWallPlane(imageNamed: "right-wall", size: CGSize(width: 3.0, height: 2.0), rotation: 2, includesPhysics: false)
+		rightWallNode.position = SCNVector3(-2.0, 0.0, -1.5 )
+		self.sceneView.scene.rootNode.addChildNode(rightWallNode)
 		
 		
-		wallNode.transform = SCNMatrix4MakeRotation(-Float.pi / 2, 1, 0, 0)
+		// add the wall and door
+//		wallPlane  = SCNPlane(width: 3, height: 2.0)
+//		wallPlane.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-closed")
+//		wallPlane.firstMaterial?.lightingModel = .constant
+//		wallPlane.firstMaterial?.isDoubleSided = true
+//		wallNode = SCNNode(geometry: wallPlane)
+//		wallNode.position = SCNVector3(0,0,-1.5)
+//
+//
+//		let wallBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: wallPlane, options: nil))
+//		wallBody.mass = 0
+//		wallBody.restitution = 0.25
+//		wallBody.friction = 0.75
+//		wallBody.categoryBitMask =	spaceItemCategory
+//		wallBody.contactTestBitMask =  pointOfViewCategory
+//		wallNode.physicsBody = wallBody
+//
+//		self.sceneView.scene.rootNode.addChildNode(wallNode)
+//
+//
+//		wallNode.transform = SCNMatrix4MakeRotation(-Float.pi / 1.5, 0, 1, 0)
 		
 		
-		playIntroMovie()
+//		playIntroMovie()
 		
         
 //        // Create a new scene
@@ -247,6 +260,38 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 //        // Set the scene to the view
 //        sceneView.scene = scene
     }
+	
+	
+	
+	func createWallPlane(imageNamed: String, size: CGSize, rotation: Float, includesPhysics: Bool = false) -> SCNNode{
+		
+		let wallPlane = SCNPlane(width: size.width, height: size.height)
+		wallPlane.firstMaterial?.diffuse.contents = UIImage(named: imageNamed)
+		wallPlane.firstMaterial?.lightingModel = .constant
+		wallPlane.firstMaterial?.isDoubleSided = true
+		wallNode = SCNNode(geometry: wallPlane)
+//		wallNode.position = position //SCNVector3(0,0,-1.5)
+		
+		if(includesPhysics){
+			let wallBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: wallPlane, options: nil))
+			wallBody.mass = 0
+			wallBody.restitution = 0.25
+			wallBody.friction = 0.75
+			wallBody.categoryBitMask =	spaceItemCategory
+			wallBody.contactTestBitMask =  pointOfViewCategory
+			wallNode.physicsBody = wallBody
+		}
+		
+		if(rotation > 0){
+			wallNode.transform = SCNMatrix4MakeRotation(-Float.pi / rotation, 0, 1, 0)
+		}
+		
+		return wallNode
+		
+	}
+	
+	
+	
 	
 	func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
 		
@@ -277,7 +322,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		}
 		
 		if (self.state >= 3){
-			wallPlane.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-open")
+			wallNode.geometry!.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-open")
 			isDoorOpen = true
 		}
 		
