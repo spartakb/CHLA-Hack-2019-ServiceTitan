@@ -219,13 +219,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		wallNode.position = SCNVector3(0, 0, -2.5)
 		self.sceneView.scene.rootNode.addChildNode(wallNode)
 		
-		let leftWallNode = createWallPlane(imageNamed: "left-wall", size: CGSize(width: 3.0, height: 2.0), rotation: 2, includesPhysics: false)
-		leftWallNode.position = SCNVector3(2.0, 0.0, -1.5 )
+		let leftWallNode = createWallPlane(imageNamed: "left-wall", size: CGSize(width: 5.0, height: 2.0), rotation: 2, includesPhysics: false)
+		leftWallNode.position = SCNVector3(2.0, 0.0, -0.0 )
 		self.sceneView.scene.rootNode.addChildNode(leftWallNode)
 		
-		let rightWallNode = createWallPlane(imageNamed: "right-wall", size: CGSize(width: 3.0, height: 2.0), rotation: 2, includesPhysics: false)
-		rightWallNode.position = SCNVector3(-2.0, 0.0, -1.5 )
+		let rightWallNode = createWallPlane(imageNamed: "right-wall", size: CGSize(width: 5.0, height: 2.0), rotation: 2, includesPhysics: false)
+		rightWallNode.position = SCNVector3(-2.0, 0.0, -0.0 )
 		self.sceneView.scene.rootNode.addChildNode(rightWallNode)
+		
+		
+		let backWallNode = createWallPlane(imageNamed: "right-wall", size: CGSize(width: 4.0, height: 2.0), rotation: 0, includesPhysics: false)
+		backWallNode.position = SCNVector3(0, 0, 2.5)
+		self.sceneView.scene.rootNode.addChildNode(backWallNode)
 		
 		
 		// add the wall and door
@@ -251,7 +256,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 //		wallNode.transform = SCNMatrix4MakeRotation(-Float.pi / 1.5, 0, 1, 0)
 		
 		
-//		playIntroMovie()
+		playIntroMovie()
 		
         
 //        // Create a new scene
@@ -393,6 +398,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 			debugPrint("video.m4v not found")
 			return
 		}
+		
+		do {
+			try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+			try AVAudioSession.sharedInstance().setActive(true)
+		} catch {
+			print(error)
+		}
+
+		
 		let videoURL = URL(fileURLWithPath: path)
 		let player = AVPlayer(url: videoURL)
 		playerLayer = AVPlayerLayer(player: player)
