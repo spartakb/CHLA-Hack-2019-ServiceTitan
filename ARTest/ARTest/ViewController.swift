@@ -95,7 +95,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 					object = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.1)
 				
 			default:
-					object = SCNCone(topRadius: 0.1, bottomRadius: 0.2, height: 0.1)
+					object = SCNCone(topRadius: 0.1, bottomRadius: 0.2, height: 0.3)
 			}
 			
 			object.firstMaterial?.specular.contents = UIColor.white
