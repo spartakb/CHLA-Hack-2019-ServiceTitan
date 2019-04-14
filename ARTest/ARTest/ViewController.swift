@@ -219,18 +219,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		wallNode.position = SCNVector3(0, 0, -2.5)
 		self.sceneView.scene.rootNode.addChildNode(wallNode)
 		
-		let leftWallNode = createWallPlane(imageNamed: "left-wall", size: CGSize(width: 5.0, height: 2.0), rotation: 2, includesPhysics: false)
-		leftWallNode.position = SCNVector3(2.0, 0.0, -0.0 )
+		let leftWallNode = createWallPlane(imageNamed: "left-wall", size: CGSize(width: 5.0, height: 1.0), rotation: 2, includesPhysics: false)
+		leftWallNode.position = SCNVector3(2.0, 0.5, -0.0 )
 		self.sceneView.scene.rootNode.addChildNode(leftWallNode)
 		
-		let rightWallNode = createWallPlane(imageNamed: "right-wall", size: CGSize(width: 5.0, height: 2.0), rotation: 2, includesPhysics: false)
-		rightWallNode.position = SCNVector3(-2.0, 0.0, -0.0 )
+		let rightWallNode = createWallPlane(imageNamed: "right-wall", size: CGSize(width: 5.0, height: 1.0), rotation: 2, includesPhysics: false)
+		rightWallNode.position = SCNVector3(-2.0, 0.5, -0.0 )
 		self.sceneView.scene.rootNode.addChildNode(rightWallNode)
 		
 		
-		let backWallNode = createWallPlane(imageNamed: "right-wall", size: CGSize(width: 4.0, height: 2.0), rotation: 0, includesPhysics: false)
-		backWallNode.position = SCNVector3(0, 0, 2.5)
-		self.sceneView.scene.rootNode.addChildNode(backWallNode)
+//		let backWallNode = createWallPlane(imageNamed: "right-wall", size: CGSize(width: 4.0, height: 2.0), rotation: 0, includesPhysics: false)
+//		backWallNode.position = SCNVector3(0, 0, 2.5)
+//		self.sceneView.scene.rootNode.addChildNode(backWallNode)
 		
 		
 		// add the wall and door
@@ -274,7 +274,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		wallPlane.firstMaterial?.diffuse.contents = UIImage(named: imageNamed)
 		wallPlane.firstMaterial?.lightingModel = .constant
 		wallPlane.firstMaterial?.isDoubleSided = true
-		wallNode = SCNNode(geometry: wallPlane)
+		let node = SCNNode(geometry: wallPlane)
 //		wallNode.position = position //SCNVector3(0,0,-1.5)
 		
 		if(includesPhysics){
@@ -284,14 +284,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 			wallBody.friction = 0.75
 			wallBody.categoryBitMask =	spaceItemCategory
 			wallBody.contactTestBitMask =  pointOfViewCategory
-			wallNode.physicsBody = wallBody
+			node.physicsBody = wallBody
 		}
 		
 		if(rotation > 0){
-			wallNode.transform = SCNMatrix4MakeRotation(-Float.pi / rotation, 0, 1, 0)
+			node.transform = SCNMatrix4MakeRotation(-Float.pi / rotation, 0, 1, 0)
 		}
 		
-		return wallNode
+		return node
 		
 	}
 	

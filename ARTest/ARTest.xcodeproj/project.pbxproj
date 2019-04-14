@@ -10,6 +10,7 @@
 		A12557D219AF22F15D1FD8F4 /* Pods_ARTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15A8F259233EBD74E259DFB5 /* Pods_ARTest.framework */; };
 		C37C205622630D66008FC2E3 /* app-s1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = C37C205522630A5E008FC2E3 /* app-s1.mp4 */; };
 		C37C205722630D69008FC2E3 /* APP-S2.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = C37C205422630A5D008FC2E3 /* APP-S2.mp4 */; };
+		C37C20592263A6B3008FC2E3 /* mars.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C37C20582263A6B3008FC2E3 /* mars.jpg */; };
 		C3FA8FEC2262AA4200460319 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA8FEB2262AA4200460319 /* AppDelegate.swift */; };
 		C3FA8FEE2262AA4200460319 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = C3FA8FED2262AA4200460319 /* art.scnassets */; };
 		C3FA8FF02262AA4200460319 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA8FEF2262AA4200460319 /* ViewController.swift */; };
@@ -24,6 +25,7 @@
 		46902A7754989DA51C9B9845 /* Pods-ARTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ARTest.debug.xcconfig"; path = "Target Support Files/Pods-ARTest/Pods-ARTest.debug.xcconfig"; sourceTree = "<group>"; };
 		C37C205422630A5D008FC2E3 /* APP-S2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "APP-S2.mp4"; sourceTree = "<group>"; };
 		C37C205522630A5E008FC2E3 /* app-s1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "app-s1.mp4"; sourceTree = "<group>"; };
+		C37C20582263A6B3008FC2E3 /* mars.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mars.jpg; sourceTree = "<group>"; };
 		C3FA8FE82262AA4200460319 /* ARTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3FA8FEB2262AA4200460319 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3FA8FED2262AA4200460319 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				C37C205522630A5E008FC2E3 /* app-s1.mp4 */,
 				C37C205422630A5D008FC2E3 /* APP-S2.mp4 */,
 				C3FA90052262DC7200460319 /* panoramicImage.jpeg */,
+				C37C20582263A6B3008FC2E3 /* mars.jpg */,
 				C3FA8FEB2262AA4200460319 /* AppDelegate.swift */,
 				C3FA8FED2262AA4200460319 /* art.scnassets */,
 				C3FA8FEF2262AA4200460319 /* ViewController.swift */,
@@ -162,6 +165,7 @@
 			files = (
 				C3FA8FEE2262AA4200460319 /* art.scnassets in Resources */,
 				C37C205722630D69008FC2E3 /* APP-S2.mp4 in Resources */,
+				C37C20592263A6B3008FC2E3 /* mars.jpg in Resources */,
 				C3FA8FF82262AA4500460319 /* LaunchScreen.storyboard in Resources */,
 				C3FA8FF52262AA4500460319 /* Assets.xcassets in Resources */,
 				C3FA90062262DC7300460319 /* panoramicImage.jpeg in Resources */,
