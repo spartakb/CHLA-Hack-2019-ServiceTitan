@@ -9,6 +9,7 @@
 import UIKit
 import SceneKit
 import ARKit
+import CTPanoramaView
 
 let pointOfViewCategory:Int = 0x1 << 0
 let spaceItemCategory:Int = 0x1 << 1
@@ -17,21 +18,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 
     @IBOutlet var sceneView: ARSCNView!
 	
+	var panaromaView: CTPanoramaView!
+	
 	@IBAction func addButtonTouched(_ sender: Any) {
 		
-		let ball = SCNSphere(radius: 0.01)
-		let ballNode = SCNNode(geometry: ball)
-		ballNode.position = SCNVector3Make(0, 0, -0.2)
 		
-		let physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(geometry: ball, options: nil))
-		physicsBody.mass = 1
-		physicsBody.restitution = 0.25
-		physicsBody.friction = 0.75
-		physicsBody.categoryBitMask = pointOfViewCategory
-		physicsBody.contactTestBitMask = spaceItemCategory
-		ballNode.physicsBody = physicsBody
-		
-		sceneView.pointOfView?.addChildNode(ballNode)
 		
 		for _ in 1...10 {
 			
@@ -69,11 +60,36 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		
 	}
 	
+	
+	func loadPanoView(){
+		panaromaView = CTPanoramaView(frame: self.view.bounds)
+		
+		let image = UIImage(named: "spherical")
+		
+		panaromaView.image = image
+		panaromaView.panoramaType = .spherical
+//		panaromaView.controlMethod = .touch
+		panaromaView.controlMethod = .motion
+//		panaromaView.compass =  .compassView
+		panaromaView.alpha = 0
+		self.view.addSubview(panaromaView)
+		
+		
+		UIView.animate(withDuration: 0.5) {
+			self.panaromaView.alpha = 1
+			self.sceneView.alpha = 0
+			
+		}
+		
+		print("Add Pano View!!!!!")
+		
+	}
+	
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Set the view's delegate
+		
+		// Set the view's delegate
         sceneView.delegate = self
 		
 		sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
@@ -84,6 +100,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		sceneView.autoenablesDefaultLighting = true
 		
 		sceneView.scene.physicsWorld.contactDelegate = self
+		
+		
+		let ball = SCNSphere(radius: 0.01)
+		let ballNode = SCNNode(geometry: ball)
+		ballNode.position = SCNVector3Make(0, 0, -0.2)
+		
+		let physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(geometry: ball, options: nil))
+		physicsBody.mass = 1
+		physicsBody.restitution = 0.25
+		physicsBody.friction = 0.75
+		physicsBody.categoryBitMask = pointOfViewCategory
+		physicsBody.contactTestBitMask = spaceItemCategory
+		ballNode.physicsBody = physicsBody
+		
+		sceneView.pointOfView?.addChildNode(ballNode)
 		
         
 //        // Create a new scene
@@ -99,6 +130,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 			contact.nodeB.removeFromParentNode()
 		} else {
 			contact.nodeA.removeFromParentNode()
+		}
+		
+		DispatchQueue.main.async {
+			self.loadPanoView()
 		}
 		
 		print("Got contact!!!!")
