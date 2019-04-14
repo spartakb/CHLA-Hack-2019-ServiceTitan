@@ -64,10 +64,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 	func loadPanoView(){
 		panaromaView = CTPanoramaView(frame: self.view.bounds)
 		
-		let image = UIImage(named: "spherical")
+//		let image = UIImage(named: "spherical")
+		let image = UIImage(named: "panoramicImage.jpeg")
 		
 		panaromaView.image = image
-		panaromaView.panoramaType = .spherical
+		//panaromaView.panoramaType = .spherical
+		panaromaView.panoramaType = .cylindrical
 //		panaromaView.controlMethod = .touch
 		panaromaView.controlMethod = .motion
 //		panaromaView.compass =  .compassView
