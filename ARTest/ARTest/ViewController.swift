@@ -257,7 +257,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 //		wallNode.transform = SCNMatrix4MakeRotation(-Float.pi / 1.5, 0, 1, 0)
 		
 		
-//		playIntroMovie()
+		playIntroMovie()
 		
         
 //        // Create a new scene
@@ -332,6 +332,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 			isDoorOpen = true
 		}
 		
+		
+		// handle video
+		if(self.state == 1){
+			guard let path = Bundle.main.path(forResource: "app-s3", ofType:"mp4") else {
+				debugPrint("video.m4v not found")
+				return
+			}
+			
+			let url = URL(fileURLWithPath: path)
+			changeVideoURL(videoURL: url)
+		}
+		else if(self.state == 2){
+			guard let path = Bundle.main.path(forResource: "app-s4", ofType:"mp4") else {
+				debugPrint("video.m4v not found")
+				return
+			}
+			
+			let url = URL(fileURLWithPath: path)
+			changeVideoURL(videoURL: url)
+		}
+		
+		
 
 		
 		print("Got contact!!!!")
@@ -344,6 +366,19 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 //				contact.nodeA.removeFromParentNode()
 //			}
 //		}
+	}
+	
+	
+	func changeVideoURL(videoURL: URL){
+		
+		moviePlayer.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+		
+		
+		DispatchQueue.main.async {
+			self.moviePlayer.play()
+		}
+		
+//		let player = AVPlayer(url: videoURL)
 	}
     
     override func viewWillAppear(_ animated: Bool) {
@@ -410,6 +445,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		
 		let videoURL = URL(fileURLWithPath: path)
 		let player = AVPlayer(url: videoURL)
+		moviePlayer = player
 		playerLayer = AVPlayerLayer(player: player)
 		
 		playerView = UIView(frame: self.view.bounds)
