@@ -22,43 +22,43 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 	
 	@IBAction func addButtonTouched(_ sender: Any) {
 		
+
+        let ball = SCNSphere(radius: 0.01)
+        let ballNode = SCNNode(geometry: ball)
+        ballNode.position = SCNVector3Make(0, 0, -0.2)
+
+        let physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(geometry: ball, options: nil))
+        physicsBody.mass = 1
+        physicsBody.restitution = 0.25
+        physicsBody.friction = 0.75
+        physicsBody.categoryBitMask = pointOfViewCategory
+        physicsBody.contactTestBitMask = spaceItemCategory
+        ballNode.physicsBody = physicsBody
+        
 		
-		
-		for _ in 1...10 {
-			
-			
-			let object = SCNCapsule(capRadius: 0.04, height: 0.2)
-			object.firstMaterial?.specular.contents = UIColor.white
-			object.firstMaterial?.diffuse.contents = UIColor(hue: CGFloat(drand48()), saturation: 1, brightness: 1, alpha: 1)
-			
-			let node = SCNNode()
-			//node.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.03)
-			node.geometry = object //SCNCapsule(capRadius: 0.04, height: 0.2)
-//			node.geometry?.firstMaterial?.specular.contents = UIColor.white
-//			node.geometry?.firstMaterial?.diffuse.contents = UIColor(hue: CGFloat(drand48()), saturation: 1, brightness: 1, alpha: 1)
-			
-			
-			let x = Float.random(in: -3.0 ..< 3.1)
-			let y = Float.random(in: -0.1 ..< 0.5)
-			let z = Float.random(in: -3.1 ..< 3.1)
-			
-			node.position = SCNVector3(x,y,z)
-			
-			let physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: object, options: nil))
-			physicsBody.mass = 0
-			physicsBody.restitution = 0.25
-			physicsBody.friction = 0.75
-			physicsBody.categoryBitMask = spaceItemCategory
-			physicsBody.contactTestBitMask = pointOfViewCategory
-			node.physicsBody = physicsBody
-			
-			self.sceneView.scene.rootNode.addChildNode(node)
-			
-		}
+		sceneView.pointOfView?.addChildNode(ballNode)
+    
+        let thrusters = SCNScene(named: "art.scnassets/SpaceEngine.scn")!
+        let thrustersNode = thrusters.rootNode.childNode(withName: "default", recursively: true)!
+        let x = Float.random(in: -3.0 ..< 3.1)
+        let y = Float.random(in: -0.1 ..< 0.5)
+        let z = Float.random(in: -3.1 ..< 3.1)
+        thrustersNode.position = SCNVector3(x,y,z)
+            thrustersNode.scale = SCNVector3Make(0.05, 0.05, 0.05)
+        self.sceneView.scene.rootNode.addChildNode(thrustersNode)
+
 
 		
 		
 	}
+    func placeObject(){
+        let node = SCNNode()
+        let x = Float.random(in: -3.0 ..< 3.1)
+        let y = Float.random(in: -0.1 ..< 0.5)
+        let z = Float.random(in: -3.0 ..< 3.1)
+        node.position = SCNVector3(x,y,z)
+        
+    }
 	
 	
 	func loadPanoView(){
@@ -129,6 +129,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		if contact.nodeA.physicsBody!.categoryBitMask == pointOfViewCategory {
 			contact.nodeB.removeFromParentNode()
 		} else {
+
 			contact.nodeA.removeFromParentNode()
 		}
 		
