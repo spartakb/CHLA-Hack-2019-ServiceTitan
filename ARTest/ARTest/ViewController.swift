@@ -23,7 +23,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		let ballNode = SCNNode(geometry: ball)
 		ballNode.position = SCNVector3Make(0, 0, -0.2)
 		
-		let physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: ball, options: nil))
+		let physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(geometry: ball, options: nil))
 		physicsBody.mass = 1
 		physicsBody.restitution = 0.25
 		physicsBody.friction = 0.75
@@ -54,7 +54,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 			node.position = SCNVector3(x,y,z)
 			
 			let physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: object, options: nil))
-			physicsBody.mass = 1
+			physicsBody.mass = 0
 			physicsBody.restitution = 0.25
 			physicsBody.friction = 0.75
 			physicsBody.categoryBitMask = spaceItemCategory
@@ -94,6 +94,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     }
 	
 	func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+		
+		if contact.nodeA.physicsBody!.categoryBitMask == pointOfViewCategory {
+			contact.nodeB.removeFromParentNode()
+		} else {
+			contact.nodeA.removeFromParentNode()
+		}
+		
 		print("Got contact!!!!")
 //		let mask = contact.nodeA.physicsBody!.categoryBitMask | contact.nodeB.physicsBody!.categoryBitMask
 //
