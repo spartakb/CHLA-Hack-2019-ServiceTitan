@@ -10,6 +10,7 @@ import UIKit
 import SceneKit
 import ARKit
 import CTPanoramaView
+//import MediaPlayer
 
 let pointOfViewCategory:Int = 0x1 << 1
 let spaceItemCategory:Int = 0x1 << 1
@@ -26,6 +27,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 	var wallPlane: SCNPlane!
 	var wallNode: SCNNode!
 	var isDoorOpen = false
+	
+	
+	
 	
 	@IBAction func addButtonTouched(_ sender: Any) {
 		
@@ -229,6 +233,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		
 		self.sceneView.scene.rootNode.addChildNode(wallNode)
 		
+		
+		
+		wallNode.transform = SCNMatrix4MakeRotation(-Float.pi / 2, 1, 0, 0)
+		
+		
+		playIntroMovie()
+		
         
 //        // Create a new scene
 //        let scene = SCNScene(named: "art.scnassets/ship.scn")!
@@ -326,4 +337,76 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
     }
+	
+	
+	var moviePlayer : AVPlayer!
+	var playerLayer : AVPlayerLayer!
+	var playerView : UIView!
+	func playIntroMovie(){
+		
+		guard let path = Bundle.main.path(forResource: "app-s1", ofType:"mp4") else {
+			debugPrint("video.m4v not found")
+			return
+		}
+		let videoURL = URL(fileURLWithPath: path)
+		let player = AVPlayer(url: videoURL)
+		playerLayer = AVPlayerLayer(player: player)
+		
+		playerView = UIView(frame: self.view.bounds)
+		playerView.layer.addSublayer(playerLayer)
+		playerView.clipsToBounds = true
+		
+		playerLayer.frame = self.view.bounds
+		playerView.translatesAutoresizingMaskIntoConstraints = false
+		
+		playerLayer.backgroundColor = UIColor.white.cgColor
+//		self.view.layer.addSublayer(playerLayer)
+		self.view.addSubview(playerView)
+//
+//		NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: object: player.currentItem)
+
+		
+//		NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying:),
+//											   name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+ 
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(ViewController.playerDidFinishPlaying), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+		
+		player.play()
+		
+		
+//		let url = URL (string: "http://jplayer.org/video/m4v/Big_Buck_Bunny_Trailer.m4v")
+//		moviePlayer = MPMoviePlayerController(contentURL: url!)
+//		if let player = moviePlayer {
+//			player.view.frame = self.view.bounds
+//			player.view.backgroundColor = UIColor.white
+//			player.prepareToPlay()
+//			player.scalingMode = .aspectFill
+//			self.view.addSubview(player.view)
+//		}
+//
+		
+	}
+	
+	@objc public func playerDidFinishPlaying(note: NSNotification) {
+		print("Video Finished")
+//		playerLayer.removeFromSuperlayer()
+		
+		
+		
+		UIView.animate(withDuration: 0.8) {
+			
+			
+			var frame = self.playerView.frame
+			frame.size.width = self.view.frame.size.width / 3.0
+			frame.size.height = frame.size.width
+			self.playerView.layer.sublayers![0].frame = frame
+			
+			frame.origin.x = self.view.frame.size.width  - frame.size.width
+			self.playerView.frame = frame
+			
+		}
+		
+	}
+	
 }
