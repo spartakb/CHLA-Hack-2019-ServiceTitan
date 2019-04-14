@@ -108,9 +108,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 			//			node.geometry?.firstMaterial?.diffuse.contents = UIColor(hue: CGFloat(drand48()), saturation: 1, brightness: 1, alpha: 1)
 			
 			
-			let x = Float.random(in: -2.9 ..< 3.1)
+			let x = Float.random(in: -1.1 ..< 1.1)
 			let y = Float.random(in: -0.1 ..< 0.5)
-			let z = Float.random(in: -2.9 ..< 3.1)
+			let z = Float.random(in: -1.1 ..< 1.1)
 			
 			node.position = SCNVector3(x,y,z)
 			
@@ -212,11 +212,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		
 		
 		// add the wall and door
-		wallPlane  = SCNPlane(width: 7, height: 3.5)
+		wallPlane  = SCNPlane(width: 3, height: 2.0)
 		wallPlane.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-closed")
 		wallPlane.firstMaterial?.lightingModel = .constant
 		wallNode = SCNNode(geometry: wallPlane)
-		wallNode.position = SCNVector3(0,0,-3)
+		wallNode.position = SCNVector3(0,0,-1.5)
 		
 		
 		let wallBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: wallPlane, options: nil))
@@ -258,11 +258,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		
 		if contact.nodeA.physicsBody!.categoryBitMask == pointOfViewCategory {
 			contact.nodeB.removeFromParentNode()
-            self.placeNextObject()
+//            self.placeNextObject()
 		} else {
 
 			contact.nodeA.removeFromParentNode()
-            self.placeNextObject()
+//            self.placeNextObject()
 		}
 		
 		if (self.state >= 3){
