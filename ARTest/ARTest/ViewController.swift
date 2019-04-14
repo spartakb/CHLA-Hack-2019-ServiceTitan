@@ -30,25 +30,21 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 	@IBAction func addButtonTouched(_ sender: Any) {
 		
 
-//        let ball = SCNSphere(radius: 0.01)
-//        let ballNode = SCNNode(geometry: ball)
-//        ballNode.position = SCNVector3Make(0, 0, -0.2)
+		
+//        for i in 1...3 {
 //
-//        let physicsBody = SCNPhysicsBody(type: .kinematic, shape: SCNPhysicsShape(geometry: ball, options: nil))
-//        physicsBody.mass = 1
-//        physicsBody.restitution = 0.25
-//        physicsBody.friction = 0.75
-//        physicsBody.categoryBitMask = pointOfViewCategory
-//        physicsBody.contactTestBitMask = spaceItemCategory
-//        physicsBody.collisionBitMask = collisionMask
-//        ballNode.physicsBody = physicsBody
+//            var object : SCNGeometry!
+//            switch(i){
+//            case 1:
+//                    object = SCNCapsule(capRadius: 0.04, height: 0.2)
 //
+//            case 2:
+//                    object = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.1)
 //
-//		sceneView.pointOfView?.addChildNode(ballNode)
-//        for _ in 1...10 {
+//            default:
+//                    object = SCNCone(topRadius: 0.1, bottomRadius: 0.2, height: 0.3)
+//            }
 //
-//
-//            let object = SCNCapsule(capRadius: 0.04, height: 0.2)
 //            object.firstMaterial?.specular.contents = UIColor.white
 //            object.firstMaterial?.diffuse.contents = UIColor(hue: CGFloat(drand48()), saturation: 1, brightness: 1, alpha: 1)
 //
@@ -59,9 +55,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 //            //            node.geometry?.firstMaterial?.diffuse.contents = UIColor(hue: CGFloat(drand48()), saturation: 1, brightness: 1, alpha: 1)
 //
 //
-//            let x = Float.random(in: -3.0 ..< 3.1)
+//            let x = Float.random(in: -1.1 ..< 1.1)
 //            let y = Float.random(in: -0.1 ..< 0.5)
-//            let z = Float.random(in: -3.1 ..< 3.1)
+//            let z = Float.random(in: -1.1 ..< 1.1)
 //
 //            node.position = SCNVector3(x,y,z)
 //
@@ -76,78 +72,42 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 //            self.sceneView.scene.rootNode.addChildNode(node)
 //
 //        }
-
         
-        
-        
-//        placeNextObject()
-
-
-		
-		for i in 1...3 {
-			
-			var object : SCNGeometry!
-			switch(i){
-			case 1:
-					object = SCNCapsule(capRadius: 0.04, height: 0.2)
-				
-			case 2:
-					object = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.1)
-				
-			default:
-					object = SCNCone(topRadius: 0.1, bottomRadius: 0.2, height: 0.3)
-			}
-			
-			object.firstMaterial?.specular.contents = UIColor.white
-			object.firstMaterial?.diffuse.contents = UIColor(hue: CGFloat(drand48()), saturation: 1, brightness: 1, alpha: 1)
-			
-			let node = SCNNode()
-			//node.geometry = SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0.03)
-			node.geometry = object //SCNCapsule(capRadius: 0.04, height: 0.2)
-			//			node.geometry?.firstMaterial?.specular.contents = UIColor.white
-			//			node.geometry?.firstMaterial?.diffuse.contents = UIColor(hue: CGFloat(drand48()), saturation: 1, brightness: 1, alpha: 1)
-			
-			
-			let x = Float.random(in: -1.1 ..< 1.1)
-			let y = Float.random(in: -0.1 ..< 0.5)
-			let z = Float.random(in: -1.1 ..< 1.1)
-			
-			node.position = SCNVector3(x,y,z)
-			
-			let physicsBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: object, options: nil))
-			physicsBody.mass = 0
-			physicsBody.restitution = 0.25
-			physicsBody.friction = 0.75
-			physicsBody.categoryBitMask = spaceItemCategory
-			physicsBody.contactTestBitMask = pointOfViewCategory
-			node.physicsBody = physicsBody
-			
-			self.sceneView.scene.rootNode.addChildNode(node)
-			
-		}
-
-		
+        placeNextObject()
 		
 	}
     func placeNextObject(){
         
-        let x = Float.random(in: -3.0 ..< 3.1)
-        let y = Float.random(in: -0.1 ..< 0.5)
-        let z = Float.random(in: -3.0 ..< 3.1)
+//        let x = Float.random(in: -2.0 ..< 2.1)
+//        let y = Float.random(in: -0.1 ..< 0.2)
+//        let z = Float.random(in: -2.0 ..< 2.1)
+        
+
         
         if(self.state == 0){
             let thrusters = SCNScene(named: "art.scnassets/SpaceEngine.scn")!
             let thrustersNode = thrusters.rootNode.childNode(withName: "default", recursively: true)!
+            
+            let x = 1.0
+            let y = 0.01
+            let z = -1.0
+            
             thrustersNode.position = SCNVector3(x,y,z)
-            thrustersNode.scale = SCNVector3(0.05, 0.05, 0.05)
+            thrustersNode.scale = SCNVector3(0.02, 0.02, 0.02)
             self.sceneView.scene.rootNode.addChildNode(thrustersNode)
         } else if(self.state == 1) {
+            
+            let x = -0.5
+            let y = 0.01
+            let z = 1.0
+            
             let astro = SCNScene(named: "art.scnassets/Astronaut.scn")!
             let astroNode = astro.rootNode.childNode(withName: "default", recursively: true)!
             astroNode.position = SCNVector3(x,y,z)
             astroNode.scale = SCNVector3(0.2, 0.2, 0.2)
             self.sceneView.scene.rootNode.addChildNode(astroNode)
         }
+        self.state = self.state + 1
         
     }
 	
@@ -205,6 +165,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		physicsBody.friction = 0.75
 		physicsBody.categoryBitMask = pointOfViewCategory
 		physicsBody.contactTestBitMask = spaceItemCategory
+        physicsBody.collisionBitMask = collisionMask
 		ballNode.physicsBody = physicsBody
 		
 		sceneView.pointOfView?.addChildNode(ballNode)
@@ -216,7 +177,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		wallPlane.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-closed")
 		wallPlane.firstMaterial?.lightingModel = .constant
 		wallNode = SCNNode(geometry: wallPlane)
-		wallNode.position = SCNVector3(0,0,-1.5)
+		wallNode.position = SCNVector3(0,0,-2.5)
 		
 		
 		let wallBody = SCNPhysicsBody(type: .dynamic, shape: SCNPhysicsShape(geometry: wallPlane, options: nil))
@@ -239,10 +200,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 	
 	func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
 		
-
-        self.state = self.state + 1
 		
-		if((isDoorOpen == false) && (contact.nodeA == self.wallNode || contact.nodeA == self.wallNode)){
+		if((isDoorOpen == false) && (contact.nodeA == self.wallNode)){
 			return
 		}
 		
@@ -258,13 +217,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		
 		if contact.nodeA.physicsBody!.categoryBitMask == pointOfViewCategory {
 			contact.nodeB.removeFromParentNode()
-//            self.placeNextObject()
+            print("Got contact B!!!!")
+
+            self.placeNextObject()
 		} else {
 
 			contact.nodeA.removeFromParentNode()
+            print("Got contact A!!!!")
+
 //            self.placeNextObject()
 		}
-		
 		if (self.state >= 3){
 			wallPlane.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-open")
 			isDoorOpen = true
