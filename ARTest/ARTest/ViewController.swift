@@ -160,11 +160,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		panaromaView = CTPanoramaView(frame: self.view.bounds)
 		
 //		let image = UIImage(named: "spherical")
-		let image = UIImage(named: "panoramicImage.jpeg")
+//		let image = UIImage(named: "panoramicImage.jpeg")
+		let image = UIImage(named: "mars.jpg")
 		
 		panaromaView.image = image
-		//panaromaView.panoramaType = .spherical
-		panaromaView.panoramaType = .cylindrical
+		panaromaView.panoramaType = .spherical
+//		panaromaView.panoramaType = .cylindrical
 //		panaromaView.controlMethod = .touch
 		panaromaView.controlMethod = .motion
 //		panaromaView.compass =  .compassView
@@ -220,11 +221,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		self.sceneView.scene.rootNode.addChildNode(wallNode)
 		
 		let leftWallNode = createWallPlane(imageNamed: "left-wall", size: CGSize(width: 5.0, height: 1.0), rotation: 2, includesPhysics: false)
-		leftWallNode.position = SCNVector3(2.0, 0.5, -0.0 )
+		leftWallNode.position = SCNVector3(2.0, 0.2, -0.0 )
 		self.sceneView.scene.rootNode.addChildNode(leftWallNode)
 		
 		let rightWallNode = createWallPlane(imageNamed: "right-wall", size: CGSize(width: 5.0, height: 1.0), rotation: 2, includesPhysics: false)
-		rightWallNode.position = SCNVector3(-2.0, 0.5, -0.0 )
+		rightWallNode.position = SCNVector3(-2.0, 0.2, -0.0 )
 		self.sceneView.scene.rootNode.addChildNode(rightWallNode)
 		
 		
@@ -256,7 +257,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 //		wallNode.transform = SCNMatrix4MakeRotation(-Float.pi / 1.5, 0, 1, 0)
 		
 		
-		playIntroMovie()
+//		playIntroMovie()
 		
         
 //        // Create a new scene
