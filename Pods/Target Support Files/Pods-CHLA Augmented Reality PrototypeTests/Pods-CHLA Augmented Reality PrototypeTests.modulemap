@@ -1,6 +1,0 @@
-framework module Pods_CHLA_Augmented_Reality_PrototypeTests {
-  umbrella header "Pods-CHLA Augmented Reality PrototypeTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
