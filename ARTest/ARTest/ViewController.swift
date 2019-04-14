@@ -190,8 +190,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 		// Set the view's delegate
         sceneView.delegate = self
 		
-		sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
-        
+//		sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+//        
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
 		
@@ -327,7 +327,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
 //            self.placeNextObject()
 		}
 		
-		if (self.state >= 3){
+		if (self.state >= 2){
 			wallNode.geometry!.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-open")
 			isDoorOpen = true
 		}
