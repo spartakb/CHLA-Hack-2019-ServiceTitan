@@ -265,7 +265,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             self.placeNextObject()
 		}
 		
-		if (self.state >= 2){
+		if (self.state >= 3){
 			wallPlane.firstMaterial?.diffuse.contents = UIImage(named: "sci-fi-door-3d-open")
 			isDoorOpen = true
 		}
